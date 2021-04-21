@@ -7,6 +7,7 @@ import fonts from "../../styles/fonts";
 import { EnvironmentButton } from "../components/EnvironmentButton";
 import { api } from "../services/api";
 import { PlantCardPrimary } from "../components/PlantCardPrimary";
+import { Load } from "../components/Load";
 
 interface IEnvironmentprops {
   key: string;
@@ -31,6 +32,7 @@ export const PlantSelect = () => {
   const [plants, setPlants] = useState<IPlantprops[]>([]);
   const [filteredPlants, setFilteredPlants] = useState<IPlantprops[]>([]);
   const [environmentSelected, setEnvironmentSelected] = useState("all");
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchEnvironment = async () => {
@@ -55,6 +57,8 @@ export const PlantSelect = () => {
         "plants?_sort=name&_order=asc"
       );
       setPlants(data);
+      setFilteredPlants(data);
+      setIsLoading(false);
     };
 
     fetchPlants();
@@ -73,6 +77,10 @@ export const PlantSelect = () => {
 
     setFilteredPlants(filtered);
   };
+
+  if (isLoading) {
+    return <Load />;
+  }
 
   return (
     <View style={styles.container}>
