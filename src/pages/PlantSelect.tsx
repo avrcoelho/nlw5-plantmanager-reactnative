@@ -15,29 +15,17 @@ import { EnvironmentButton } from "../components/EnvironmentButton";
 import { api } from "../services/api";
 import { PlantCardPrimary } from "../components/PlantCardPrimary";
 import { Load } from "../components/Load";
+import { PlantProps } from "../libs/storage";
 
 interface IEnvironmentprops {
   key: string;
   title: string;
 }
 
-interface IPlantprops {
-  id: number;
-  name: string;
-  about: string;
-  water_tips: string;
-  photo: string;
-  environments: string[];
-  frequency: {
-    times: number;
-    repeat_every: string;
-  };
-}
-
 export const PlantSelect = () => {
   const [environments, setEnvironments] = useState<IEnvironmentprops[]>([]);
-  const [plants, setPlants] = useState<IPlantprops[]>([]);
-  const [filteredPlants, setFilteredPlants] = useState<IPlantprops[]>([]);
+  const [plants, setPlants] = useState<PlantProps[]>([]);
+  const [filteredPlants, setFilteredPlants] = useState<PlantProps[]>([]);
   const [environmentSelected, setEnvironmentSelected] = useState("all");
   const [isLoading, setIsLoading] = useState(true);
   const [page, setPage] = useState(1);
@@ -59,7 +47,7 @@ export const PlantSelect = () => {
   };
 
   const fetchPlants = async () => {
-    const { data } = await api.get<IPlantprops[]>(
+    const { data } = await api.get<PlantProps[]>(
       `plants?_sort=name&_order=asc&_page=${page}&_limit=8`
     );
     if (!data) {
@@ -88,7 +76,7 @@ export const PlantSelect = () => {
     fetchPlants();
   };
 
-  const handlePlantSelect = (plant: IPlantprops) => {
+  const handlePlantSelect = (plant: PlantProps) => {
     navigation.navigate("PlantSave", { plant });
   };
 
