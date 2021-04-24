@@ -89,7 +89,7 @@ export const PlantSelect = () => {
   };
 
   const handlePlantSelect = (plant: IPlantprops) => {
-    navigation.navigate("PlantSave");
+    navigation.navigate("PlantSave", { plant });
   };
 
   useEffect(() => {
