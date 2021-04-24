@@ -1,3 +1,3 @@
 # Next Level Week - PlantManager
 
-Development in React Native
+Developed in React Native
