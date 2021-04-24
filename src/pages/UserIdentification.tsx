@@ -44,7 +44,14 @@ export const UserIdentification = () => {
 
     await AsyncStorage.setItem("@plantmanager:user", name);
 
-    navigation.navigate("Confirmation");
+    navigation.navigate("Confirmation", {
+      title: "Prontinho",
+      subtitle:
+        "Agora vamos começar a cuidar das sua platinhas com muito cuidado",
+      buttontitle: "Começar",
+      icon: "small",
+      nextScreen: "PlantSelect",
+    });
   };
 
   return (
