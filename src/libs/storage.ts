@@ -13,6 +13,7 @@ export interface PlantProps {
     repeat_every: string;
   };
   dateTimeNotification: Date;
+  hour: string;
 }
 
 interface StoragePlantProps {
@@ -23,15 +24,15 @@ interface StoragePlantProps {
 
 export async function savePlant(plant: PlantProps): Promise<void> {
   try {
-    const data = await AsyncStorage.getItem("plantmanager:plants");
+    const data = await AsyncStorage.getItem("@plantmanager:plants");
     const oldPlants = data ? (JSON.parse(data) as StoragePlantProps) : {};
 
     const newPlant = {
-      [plant.id]: plant,
+      [plant.id]: { data: plant },
     };
 
     await AsyncStorage.setItem(
-      "plantmanager:plants",
+      "@plantmanager:plants",
       JSON.stringify({ ...newPlant, ...oldPlants })
     );
   } catch (error) {
@@ -41,7 +42,7 @@ export async function savePlant(plant: PlantProps): Promise<void> {
 
 export async function loadPlants(): Promise<PlantProps[]> {
   try {
-    const data = await AsyncStorage.getItem("plantmanager:plants");
+    const data = await AsyncStorage.getItem("@plantmanager:plants");
     const plants = data ? (JSON.parse(data) as StoragePlantProps) : {};
     const plantsSorted = Object.keys(plants)
       .map((plant) => {

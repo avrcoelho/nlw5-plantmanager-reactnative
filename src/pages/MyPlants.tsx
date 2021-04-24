@@ -19,7 +19,7 @@ export const MyPlants = () => {
     const loadStorageData = async () => {
       const plantsStoraged = await loadPlants();
       const nextTime = formatDistance(
-        new Date(plantsStoraged[0].dateTimeNotification.getTime()),
+        new Date(plantsStoraged[0].dateTimeNotification).getTime(),
         new Date().getTime(),
         { locale: pt }
       );
@@ -32,7 +32,7 @@ export const MyPlants = () => {
     };
 
     loadStorageData();
-  });
+  }, []);
 
   return (
     <View style={styles.container}>

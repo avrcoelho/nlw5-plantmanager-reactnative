@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginLeft: 20,
     fontFamily: fonts.text,
-    colors: colors.blue,
+    color: colors.blue,
     fontSize: 17,
     textAlign: "justify",
   },

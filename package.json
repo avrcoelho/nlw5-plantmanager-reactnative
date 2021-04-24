@@ -5,7 +5,7 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "server:dev": "npx json-server ./src/services/server.json --host 192.168.100.16 --post 3333",
+    "server:dev": "npx json-server ./src/services/server.json --host 192.168.100.16 --port 3333",
     "eject": "expo eject"
   },
   "dependencies": {
