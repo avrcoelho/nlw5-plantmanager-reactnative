@@ -1,7 +1,12 @@
 import React from "react";
-import { Text, StyleSheet, View } from "react-native";
-import { RectButton, RectButtonProps } from "react-native-gesture-handler";
+import { Text, StyleSheet, View, Animated } from "react-native";
+import {
+  RectButton,
+  RectButtonProps,
+  Swipeable,
+} from "react-native-gesture-handler";
 import { SvgFromUri } from "react-native-svg";
+import { Feather } from "@expo/vector-icons";
 
 import colors from "../../styles/colors";
 import fonts from "../../styles/fonts";
@@ -12,21 +17,34 @@ interface PlantCardSecondaryProps extends RectButtonProps {
     photo: string;
     hour: string;
   };
+  onRemove(): void;
 }
 
 export const PlantCardSecondary = ({
   data,
+  onRemove,
   ...rest
 }: PlantCardSecondaryProps) => {
   return (
-    <RectButton style={styles.container} {...rest}>
-      <SvgFromUri uri={data.photo} width={50} height={50} />
-      <Text style={styles.title}>{data.name}</Text>
-      <View style={styles.details}>
-        <Text style={styles.timeLabel}>Regar às</Text>
-        <Text style={styles.time}>{data.hour}</Text>
-      </View>
-    </RectButton>
+    <Swipeable
+      overshootRight={false}
+      renderRightActions={() => (
+        <Animated.View>
+          <RectButton style={styles.buttonRemove} onPress={onRemove}>
+            <Feather name="trash" size={32} color={colors.white} />
+          </RectButton>
+        </Animated.View>
+      )}
+    >
+      <RectButton style={styles.container} {...rest}>
+        <SvgFromUri uri={data.photo} width={50} height={50} />
+        <Text style={styles.title}>{data.name}</Text>
+        <View style={styles.details}>
+          <Text style={styles.timeLabel}>Regar às</Text>
+          <Text style={styles.time}>{data.hour}</Text>
+        </View>
+      </RectButton>
+    </Swipeable>
   );
 };
 
@@ -61,5 +79,17 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: fonts.heading,
     color: colors.body_dark,
+  },
+  buttonRemove: {
+    width: 100,
+    height: 108,
+    backgroundColor: colors.red,
+    marginTop: 5,
+    borderRadius: 20,
+    justifyContent: "center",
+    alignItems: "center",
+    position: "relative",
+
+    paddingLeft: 10,
   },
 });
